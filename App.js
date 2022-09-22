@@ -128,7 +128,7 @@ function ListMaker1000Final () {
             }}  
           />
           <Button
-            title="Add Todo"
+            title={selectedItem ? "Update Todo" : "Add Todo"}
             onPress={()=>{
               if (selectedItem) {
                 updateTodo(selectedItem, inputText);
