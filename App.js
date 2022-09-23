@@ -45,7 +45,6 @@ function ListMaker1000Start () {
             type="font-awesome"
             color="black"
             size={25}
-            iconStyle={{ marginRight: 10 }}
           />
         </TouchableOpacity>
         <TouchableOpacity 
@@ -56,7 +55,6 @@ function ListMaker1000Start () {
             type="font-awesome"
             color="black"
             size={25}
-            iconStyle={{ marginRight: 10 }}
           />
         </TouchableOpacity>
       </View>
@@ -117,9 +115,6 @@ function ListMaker1000Start () {
     </View>
   );
 };
-
-
-
 
 const styles = StyleSheet.create({
   screen: {
