@@ -27,9 +27,10 @@ function ListMaker1000Final () {
     setTodos(todos);
   }
 
-  const updateTodo = (todo, newText) => { 
-    todo.text = newText;
-    setTodos(todos);
+  const updateTodo = (todo, newText) => {
+    let newTodo = {...todo}; // or Object.assign({}, todo);
+    newTodo.text = newText;
+    setTodos(todos.map(item=>item.key===todo.key ? newTodo : item ));
   }
 
   const deleteTodo = (todo) => {    
