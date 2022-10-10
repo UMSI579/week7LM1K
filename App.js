@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Overlay, Icon, Input } from '@rneui/themed';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 
-function ListMaker1000Start () {
+function ListMaker1000Final () {
 
   // INITIAL VALUES FOR TESTING
   const initTodos = [
@@ -15,18 +15,28 @@ function ListMaker1000Start () {
   const [todos, setTodos] = useState(initTodos);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [inputText, setInputText] = useState('');
+  const [selectedItem, setSelectedItem] = useState(undefined);
 
   // DATA MODEL FUNCTIONS (CRUD)
   const createTodo = (todoText) => {
-    //TBD
+    let newTodo = {
+      text: todoText,
+      key: Date.now()
+    }
+    let newTodos = todos.concat(newTodo);
+    setTodos(newTodos);
   }
 
-  const updateTodo = (todo, newText) => { 
-    //TBD
+  const updateTodo = (todo, newText) => {
+    let newTodo = {...todo}; // or Object.assign({}, todo);
+    newTodo.text = newText;
+    let newTodos = todos.map(item=>item.key===todo.key ? newTodo : item );
+    setTodos(newTodos);
   }
 
   const deleteTodo = (todo) => {    
-    //TBD
+    let newTodos = todos.filter((item)=>item.key != todo.key);
+    setTodos(newTodos);
   }
   // END DATA MODEL
 
@@ -39,6 +49,11 @@ function ListMaker1000Start () {
         </View>
         <TouchableOpacity 
           style={styles.li2}  
+          onPress={()=>{
+            setSelectedItem(item);
+            setInputText(item.text);
+            setOverlayVisible(true);
+          }}  
         >
           <Icon 
             name="edit"
@@ -49,6 +64,9 @@ function ListMaker1000Start () {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.li3}
+          onPress={()=>{
+            deleteTodo(item);
+          }}  
         >
           <Icon 
             name="trash"
@@ -104,11 +122,23 @@ function ListMaker1000Start () {
           <Button
             title="Cancel"
             onPress={()=>{
+              setSelectedItem(undefined);
+              setInputText('');
               setOverlayVisible(false)
             }}  
           />
           <Button
-            title="Add Todo"
+            title={selectedItem ? "Update Todo" : "Add Todo"}
+            onPress={()=>{
+              if (selectedItem) {
+                updateTodo(selectedItem, inputText);
+              } else {
+                createTodo(inputText);
+              }
+              setSelectedItem(undefined);
+              setInputText('');
+              setOverlayVisible(false);
+            }}
           />
         </View>
       </Overlay>
@@ -175,7 +205,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListMaker1000Start;
+//export default ListMaker1000Start;
 // export default ListMaker1000Create;
 // export default ListMaker1000Delete;
-// export default ListMaker1000Final;
+export default ListMaker1000Final;
