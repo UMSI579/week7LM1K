@@ -15,7 +15,7 @@ function ListMaker1000Final () {
   const [todos, setTodos] = useState(initTodos);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [inputText, setInputText] = useState('');
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState(undefined);
 
   // DATA MODEL FUNCTIONS (CRUD)
   const createTodo = (todoText) => {
@@ -23,14 +23,15 @@ function ListMaker1000Final () {
       text: todoText,
       key: Date.now()
     }
-    todos.push(newTodo);
-    setTodos(todos);
+    let newTodos = todos.concat(newTodo);
+    setTodos(newTodos);
   }
 
   const updateTodo = (todo, newText) => {
     let newTodo = {...todo}; // or Object.assign({}, todo);
     newTodo.text = newText;
-    setTodos(todos.map(item=>item.key===todo.key ? newTodo : item ));
+    let newTodos = todos.map(item=>item.key===todo.key ? newTodo : item );
+    setTodos(newTodos);
   }
 
   const deleteTodo = (todo) => {    
